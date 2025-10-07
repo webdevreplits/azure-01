@@ -1,0 +1,551 @@
+{
+  "version": "1.0.0",
+  "description": "Azure Platform Support WebApp Database Schema",
+  "created_date": "2024-01-15",
+  "last_updated": "2024-01-15",
+  "database_types_supported": ["postgresql", "sqlite"],
+  "tables": {
+    "incidents": {
+      "description": "Store incident tickets and tracking information",
+      "columns": {
+        "id": {
+          "type": "SERIAL/INTEGER",
+          "primary_key": true,
+          "auto_increment": true,
+          "description": "Unique incident identifier"
+        },
+        "incident_id": {
+          "type": "VARCHAR(50)",
+          "unique": true,
+          "not_null": true,
+          "description": "Human-readable incident ID (e.g., INC-2024-001)"
+        },
+        "title": {
+          "type": "VARCHAR(255)",
+          "not_null": true,
+          "description": "Brief incident title"
+        },
+        "description": {
+          "type": "TEXT",
+          "description": "Detailed incident description"
+        },
+        "status": {
+          "type": "VARCHAR(20)",
+          "default": "Open",
+          "values": ["Open", "In Progress", "Resolved", "Closed"],
+          "description": "Current incident status"
+        },
+        "priority": {
+          "type": "VARCHAR(10)",
+          "default": "Medium",
+          "values": ["Critical", "High", "Medium", "Low"],
+          "description": "Incident priority level"
+        },
+        "assignee": {
+          "type": "VARCHAR(100)",
+          "description": "Person assigned to handle the incident"
+        },
+        "service": {
+          "type": "VARCHAR(50)",
+          "description": "Affected Azure service"
+        },
+        "region": {
+          "type": "VARCHAR(50)",
+          "description": "Affected Azure region"
+        },
+        "category": {
+          "type": "VARCHAR(50)",
+          "values": ["Performance", "Availability", "Security", "Configuration", "Other"],
+          "description": "Incident category"
+        },
+        "impact": {
+          "type": "TEXT",
+          "description": "Business impact description"
+        },
+        "created_at": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Incident creation timestamp"
+        },
+        "updated_at": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Last update timestamp"
+        }
+      },
+      "indexes": [
+        {
+          "name": "idx_incidents_status",
+          "columns": ["status"],
+          "description": "Index for status filtering"
+        },
+        {
+          "name": "idx_incidents_assignee",
+          "columns": ["assignee"],
+          "description": "Index for assignee filtering"
+        },
+        {
+          "name": "idx_incidents_created",
+          "columns": ["created_at"],
+          "description": "Index for date-based queries"
+        }
+      ]
+    },
+    "resources": {
+      "description": "Cache Azure resource information for quick access",
+      "columns": {
+        "id": {
+          "type": "SERIAL/INTEGER",
+          "primary_key": true,
+          "auto_increment": true,
+          "description": "Unique resource record identifier"
+        },
+        "resource_id": {
+          "type": "VARCHAR(255)",
+          "unique": true,
+          "not_null": true,
+          "description": "Azure resource ID"
+        },
+        "name": {
+          "type": "VARCHAR(255)",
+          "not_null": true,
+          "description": "Resource name"
+        },
+        "type": {
+          "type": "VARCHAR(100)",
+          "description": "Resource type (VM, Storage, etc.)"
+        },
+        "resource_group": {
+          "type": "VARCHAR(100)",
+          "description": "Resource group name"
+        },
+        "subscription_id": {
+          "type": "VARCHAR(100)",
+          "description": "Azure subscription ID"
+        },
+        "region": {
+          "type": "VARCHAR(50)",
+          "description": "Azure region"
+        },
+        "status": {
+          "type": "VARCHAR(50)",
+          "description": "Resource status"
+        },
+        "tags": {
+          "type": "JSONB/TEXT",
+          "description": "Resource tags (JSON format)"
+        },
+        "properties": {
+          "type": "JSONB/TEXT",
+          "description": "Additional resource properties (JSON format)"
+        },
+        "last_updated": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Last cache update timestamp"
+        }
+      },
+      "indexes": [
+        {
+          "name": "idx_resources_type",
+          "columns": ["type"],
+          "description": "Index for resource type filtering"
+        },
+        {
+          "name": "idx_resources_rg",
+          "columns": ["resource_group"],
+          "description": "Index for resource group filtering"
+        },
+        {
+          "name": "idx_resources_subscription",
+          "columns": ["subscription_id"],
+          "description": "Index for subscription filtering"
+        },
+        {
+          "name": "idx_resources_status",
+          "columns": ["status"],
+          "description": "Index for status filtering"
+        }
+      ]
+    },
+    "settings": {
+      "description": "Application configuration and settings",
+      "columns": {
+        "id": {
+          "type": "SERIAL/INTEGER",
+          "primary_key": true,
+          "auto_increment": true,
+          "description": "Unique setting identifier"
+        },
+        "key": {
+          "type": "VARCHAR(100)",
+          "unique": true,
+          "not_null": true,
+          "description": "Setting key name"
+        },
+        "value": {
+          "type": "JSONB/TEXT",
+          "description": "Setting value (JSON format for complex values)"
+        },
+        "description": {
+          "type": "TEXT",
+          "description": "Setting description"
+        },
+        "updated_at": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Last update timestamp"
+        }
+      },
+      "sample_data": [
+        {
+          "key": "refresh_interval",
+          "value": "30",
+          "description": "Data refresh interval in seconds"
+        },
+        {
+          "key": "cost_threshold",
+          "value": "1000",
+          "description": "Monthly cost alert threshold in USD"
+        },
+        {
+          "key": "notification_settings",
+          "value": "{\"email\": true, \"slack\": false}",
+          "description": "Notification preferences"
+        }
+      ]
+    },
+    "users": {
+      "description": "User accounts and preferences",
+      "columns": {
+        "id": {
+          "type": "SERIAL/INTEGER",
+          "primary_key": true,
+          "auto_increment": true,
+          "description": "Unique user identifier"
+        },
+        "username": {
+          "type": "VARCHAR(100)",
+          "unique": true,
+          "not_null": true,
+          "description": "Username"
+        },
+        "email": {
+          "type": "VARCHAR(255)",
+          "description": "User email address"
+        },
+        "role": {
+          "type": "VARCHAR(50)",
+          "default": "Viewer",
+          "values": ["Administrator", "Operator", "Viewer"],
+          "description": "User role/permission level"
+        },
+        "preferences": {
+          "type": "JSONB/TEXT",
+          "description": "User preferences (JSON format)"
+        },
+        "created_at": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Account creation timestamp"
+        },
+        "last_login": {
+          "type": "TIMESTAMP",
+          "description": "Last login timestamp"
+        }
+      },
+      "indexes": [
+        {
+          "name": "idx_users_role",
+          "columns": ["role"],
+          "description": "Index for role-based queries"
+        },
+        {
+          "name": "idx_users_email",
+          "columns": ["email"],
+          "description": "Index for email lookups"
+        }
+      ]
+    },
+    "audit_log": {
+      "description": "Track system activities and changes",
+      "columns": {
+        "id": {
+          "type": "SERIAL/INTEGER",
+          "primary_key": true,
+          "auto_increment": true,
+          "description": "Unique log entry identifier"
+        },
+        "user_id": {
+          "type": "VARCHAR(100)",
+          "description": "User who performed the action"
+        },
+        "action": {
+          "type": "VARCHAR(100)",
+          "not_null": true,
+          "description": "Action performed"
+        },
+        "resource_type": {
+          "type": "VARCHAR(50)",
+          "description": "Type of resource affected"
+        },
+        "resource_id": {
+          "type": "VARCHAR(255)",
+          "description": "ID of resource affected"
+        },
+        "details": {
+          "type": "JSONB/TEXT",
+          "description": "Additional action details (JSON format)"
+        },
+        "timestamp": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Action timestamp"
+        }
+      },
+      "indexes": [
+        {
+          "name": "idx_audit_log_timestamp",
+          "columns": ["timestamp"],
+          "description": "Index for time-based queries"
+        },
+        {
+          "name": "idx_audit_log_user",
+          "columns": ["user_id"],
+          "description": "Index for user activity queries"
+        },
+        {
+          "name": "idx_audit_log_action",
+          "columns": ["action"],
+          "description": "Index for action filtering"
+        }
+      ]
+    },
+    "cost_data": {
+      "description": "Cache Azure cost data for faster access",
+      "columns": {
+        "id": {
+          "type": "SERIAL/INTEGER",
+          "primary_key": true,
+          "auto_increment": true,
+          "description": "Unique cost record identifier"
+        },
+        "subscription_id": {
+          "type": "VARCHAR(100)",
+          "not_null": true,
+          "description": "Azure subscription ID"
+        },
+        "resource_group": {
+          "type": "VARCHAR(100)",
+          "description": "Resource group name"
+        },
+        "service_name": {
+          "type": "VARCHAR(100)",
+          "description": "Azure service name"
+        },
+        "cost_date": {
+          "type": "DATE",
+          "not_null": true,
+          "description": "Cost data date"
+        },
+        "daily_cost": {
+          "type": "DECIMAL(10,2)",
+          "description": "Daily cost amount"
+        },
+        "currency": {
+          "type": "VARCHAR(3)",
+          "default": "USD",
+          "description": "Currency code"
+        },
+        "created_at": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Record creation timestamp"
+        }
+      },
+      "indexes": [
+        {
+          "name": "idx_cost_data_date",
+          "columns": ["cost_date"],
+          "description": "Index for date-based queries"
+        },
+        {
+          "name": "idx_cost_data_subscription",
+          "columns": ["subscription_id"],
+          "description": "Index for subscription filtering"
+        },
+        {
+          "name": "idx_cost_data_service",
+          "columns": ["service_name"],
+          "description": "Index for service filtering"
+        }
+      ]
+    },
+    "performance_metrics": {
+      "description": "Store Azure Monitor performance metrics",
+      "columns": {
+        "id": {
+          "type": "SERIAL/INTEGER",
+          "primary_key": true,
+          "auto_increment": true,
+          "description": "Unique metric record identifier"
+        },
+        "resource_id": {
+          "type": "VARCHAR(255)",
+          "not_null": true,
+          "description": "Azure resource ID"
+        },
+        "metric_name": {
+          "type": "VARCHAR(100)",
+          "not_null": true,
+          "description": "Metric name (CPU, Memory, etc.)"
+        },
+        "metric_value": {
+          "type": "DECIMAL(15,4)",
+          "description": "Metric value"
+        },
+        "unit": {
+          "type": "VARCHAR(20)",
+          "description": "Metric unit"
+        },
+        "timestamp": {
+          "type": "TIMESTAMP",
+          "not_null": true,
+          "description": "Metric timestamp"
+        },
+        "aggregation_type": {
+          "type": "VARCHAR(20)",
+          "default": "Average",
+          "values": ["Average", "Maximum", "Minimum", "Total", "Count"],
+          "description": "Metric aggregation type"
+        },
+        "created_at": {
+          "type": "TIMESTAMP",
+          "default": "CURRENT_TIMESTAMP",
+          "description": "Record creation timestamp"
+        }
+      },
+      "indexes": [
+        {
+          "name": "idx_perf_metrics_resource",
+          "columns": ["resource_id"],
+          "description": "Index for resource filtering"
+        },
+        {
+          "name": "idx_perf_metrics_name",
+          "columns": ["metric_name"],
+          "description": "Index for metric name filtering"
+        },
+        {
+          "name": "idx_perf_metrics_timestamp",
+          "columns": ["timestamp"],
+          "description": "Index for time-based queries"
+        }
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "type": "foreign_key",
+      "from_table": "audit_log",
+      "from_column": "user_id",
+      "to_table": "users",
+      "to_column": "username",
+      "description": "Link audit log entries to users"
+    },
+    {
+      "type": "foreign_key",
+      "from_table": "cost_data",
+      "from_column": "resource_group",
+      "to_table": "resources",
+      "to_column": "resource_group",
+      "description": "Link cost data to resources"
+    },
+    {
+      "type": "foreign_key",
+      "from_table": "performance_metrics",
+      "from_column": "resource_id",
+      "to_table": "resources",
+      "to_column": "resource_id",
+      "description": "Link performance metrics to resources"
+    }
+  ],
+  "initial_data": {
+    "settings": [
+      {
+        "key": "app_version",
+        "value": "\"1.0.0\"",
+        "description": "Application version"
+      },
+      {
+        "key": "environment",
+        "value": "\"production\"",
+        "description": "Current environment"
+      },
+      {
+        "key": "auto_refresh_enabled",
+        "value": "true",
+        "description": "Enable automatic data refresh"
+      },
+      {
+        "key": "refresh_interval_seconds",
+        "value": "30",
+        "description": "Data refresh interval in seconds"
+      },
+      {
+        "key": "cost_alert_threshold",
+        "value": "1000",
+        "description": "Monthly cost alert threshold in USD"
+      },
+      {
+        "key": "performance_alert_thresholds",
+        "value": "{\"cpu_warning\": 80, \"cpu_critical\": 90, \"memory_warning\": 85, \"memory_critical\": 95}",
+        "description": "Performance alert thresholds"
+      }
+    ],
+    "users": [
+      {
+        "username": "admin",
+        "email": "admin@company.com",
+        "role": "Administrator",
+        "preferences": "{\"theme\": \"light\", \"dashboard_refresh\": true, \"notifications\": {\"email\": true, \"incidents\": true}}"
+      },
+      {
+        "username": "operator",
+        "email": "operator@company.com",
+        "role": "Operator",
+        "preferences": "{\"theme\": \"light\", \"dashboard_refresh\": true, \"notifications\": {\"email\": true, \"incidents\": true}}"
+      }
+    ]
+  },
+  "migration_notes": {
+    "replit_to_databricks": [
+      "Replit uses PostgreSQL with JSONB support",
+      "Databricks SQL may require JSON as TEXT with string parsing",
+      "Auto-increment columns need adjustment for different databases",
+      "Consider data export/import procedures for migration"
+    ],
+    "sqlite_fallback": [
+      "SQLite uses TEXT for JSON data instead of JSONB",
+      "INTEGER PRIMARY KEY for auto-increment instead of SERIAL",
+      "No native UUID support, use TEXT with validation",
+      "Date/time functions may differ from PostgreSQL"
+    ]
+  },
+  "maintenance": {
+    "recommended_indexes": "All indexes defined above should be created for optimal performance",
+    "cleanup_procedures": [
+      "Archive audit_log entries older than 90 days",
+      "Clean up resolved incidents older than 1 year",
+      "Remove performance_metrics older than 30 days",
+      "Vacuum/analyze tables weekly for PostgreSQL"
+    ],
+    "backup_strategy": "Full database backup daily, transaction log backup every 15 minutes",
+    "monitoring": [
+      "Monitor table sizes and growth rates",
+      "Track query performance on indexed columns",
+      "Alert on failed database connections",
+      "Monitor disk space usage"
+    ]
+  }
+}
