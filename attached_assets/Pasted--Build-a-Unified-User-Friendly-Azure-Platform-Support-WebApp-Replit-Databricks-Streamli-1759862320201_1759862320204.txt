@@ -1,0 +1,208 @@
+
+
+## 🧠 Build a Unified, User-Friendly Azure Platform Support WebApp (Replit ↔ Databricks Streamlit Compatible)**
+
+You are a **Senior Full-Stack Cloud Architect and UI/UX Engineer**.
+Design and implement a **modern, user-friendly Azure Platform Support WebApp** that runs seamlessly in **Replit** and **Azure Databricks Streamlit** environments — using the same exact codebase.
+
+---
+
+### 🎯 **Goal**
+
+Create a **Streamlit-based Azure Platform Support web portal** that helps operations and platform engineers easily manage, monitor, and troubleshoot Azure services — while providing a **smooth, accessible, and responsive UI** suitable for both internal admins and support teams.
+
+The app must **auto-detect the running environment (Replit or Databricks)** and dynamically:
+
+* Configure databases and storage connections.
+* Install required packages.
+* Adapt the environment for execution (paths, secrets, runtime settings).
+
+---
+
+### 🧩 **Core Functional Features**
+
+Each section should be a **Streamlit page/tab**, accessible via a sidebar navigation menu:
+
+1. **🔍 Azure Resource Explorer**
+
+   * Display all subscriptions, resource groups, and services using Azure SDK.
+   * Allow filtering by region, type, and tags.
+   * Show health status and quick metrics.
+
+2. **💰 Cost & Usage Dashboard**
+
+   * Integrate with Azure Cost Management API.
+   * Visualize resource costs via charts.
+   * Include filters by subscription, service type, or date range.
+
+3. **🚨 Incident & Support Center**
+
+   * Log, track, and resolve Azure service incidents.
+   * Store issues in the database (Replit DB or Azure SQL/Postgres).
+   * Include status tracking (Open, In Progress, Resolved).
+
+4. **📈 Performance Monitor**
+
+   * Pull metrics from Azure Monitor and Application Insights.
+   * Display charts for CPU, memory, request latency, etc.
+   * Add alerts or threshold visualizations.
+
+5. **🧰 Tools & Utilities**
+
+   * Resource cleanup scripts (stopping unused VMs, deleting stale resources).
+   * Runbook trigger integration (for automation).
+   * Quick command console for Azure CLI-like tasks.
+
+6. **⚙️ Admin Settings**
+
+   * Manage database connections.
+   * Switch between “Replit Mode” and “Databricks Mode”.
+   * Manage API keys, Azure credentials, and user preferences.
+
+---
+
+### 🖥️ **UI/UX Requirements**
+
+* **Professional, Azure-themed design:**
+
+  * Use Streamlit + TailwindCSS-inspired styling.
+  * Azure blue palette (#0078D4, #005A9E, #F3F2F1).
+* **Dashboard layout:**
+
+  * Sidebar navigation.
+  * Responsive grid-based content area.
+  * Top bar with environment indicator (🟢 Replit / 🔵 Databricks).
+* **Accessibility:**
+
+  * Mobile-responsive layout.
+  * Keyboard and screen-reader friendly.
+* **Ease of use:**
+
+  * Simple navigation with icons and clear headings.
+  * Inline tooltips and help popups for complex features.
+  * Toast notifications for actions (e.g., “Database Connected Successfully”).
+
+---
+
+### 🧠 **Technical Requirements**
+
+#### Environment Auto-Detection
+
+* Detect environment automatically:
+
+  ```python
+  if "REPL_ID" in os.environ:  # Replit
+      env = "replit"
+  elif "DATABRICKS_RUNTIME_VERSION" in os.environ:  # Databricks
+      env = "databricks"
+  else:
+      env = "local"
+  ```
+* Display current environment in the top bar.
+
+#### Database Behavior
+
+* **Replit Mode:**
+
+  * Use Replit’s built-in PostgreSQL or `replit.database`.
+* **Databricks Mode:**
+
+  * Use Databricks-compatible database (Azure SQL / Postgres / Databricks SQL).
+  * Auto-create required schemas and tables using a `db_schema.json`.
+* **Migration Logic:**
+
+  * When app moves from Replit → Databricks, auto-provision all required databases and tables.
+  * Attempt to import Replit DB data if accessible.
+
+#### Dynamic Dependency Management
+
+* On Replit: Install via `requirements.txt`.
+* On Databricks: Run `%pip install -r requirements.txt` if missing packages detected.
+
+#### Config Loader
+
+* Use `.env` or `config.yaml` for:
+
+  * Azure credentials
+  * DB connection URLs
+  * Environment parameters
+  * Feature toggles
+
+#### Directory Structure
+
+```
+/azure-platform-support-app
+│
+├── app.py                    # Main Streamlit entry point
+├── pages/
+│   ├── 1_Resource_Explorer.py
+│   ├── 2_Cost_Dashboard.py
+│   ├── 3_Incident_Center.py
+│   ├── 4_Performance_Monitor.py
+│   ├── 5_Tools.py
+│   └── 6_Admin_Settings.py
+│
+├── core/
+│   ├── config_loader.py
+│   ├── db_manager.py
+│   ├── azure_client.py
+│   ├── env_utils.py
+│   ├── installer.py
+│   └── ui_helpers.py
+│
+├── db_schema.json
+├── requirements.txt
+├── .env.example
+└── README.md
+```
+
+---
+
+### ⚙️ **Tech Stack**
+
+* **Frontend/UI:** Streamlit (with custom CSS and icons)
+* **Backend:** Python 3.10+, SQLAlchemy ORM
+* **Database:** Replit PostgreSQL / Azure SQL / Databricks SQL
+* **Cloud SDKs:** `azure-identity`, `azure-mgmt-resource`, `azure-monitor-query`
+* **DataViz:** `plotly`, `altair`, `streamlit-aggrid`
+
+---
+
+### 🧪 **Testing & CI**
+
+* Include automated tests for:
+
+  * Environment detection
+  * DB connection & schema creation
+  * Azure API authentication
+* Add GitHub Actions CI workflow to lint, test, and build app.
+* Ensure same repo can be cloned to Databricks with no code edits.
+
+---
+
+### 📘 **Documentation**
+
+Provide a complete `README.md` that includes:
+
+* Setup instructions for Replit and Databricks.
+* How the auto-detection and migration work.
+* List of all features and screenshots.
+* Troubleshooting guide.
+
+---
+
+### 🧾 **Deliverables**
+
+✅ Fully functional **Streamlit webapp** (user-friendly UI + Azure platform tools).
+✅ Works instantly in **Replit**.
+✅ When cloned to **Azure Databricks Streamlit**, it auto-configures and runs with same functionality.
+✅ Contains well-documented, production-quality code.
+
+---
+
+### 💡 **Output Expected**
+
+Generate the **entire project codebase and folder structure**, ready to run on Replit and Databricks.
+Include `requirements.txt`, `.env.example`, and sample dashboards.
+The resulting UI must be **professional, Azure-themed, and intuitive**.
+
