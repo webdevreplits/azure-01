@@ -19,28 +19,44 @@ def main():
     st.title("🚨 Incident & Support Center")
     st.markdown("Log, track, and resolve Azure service incidents with comprehensive ticket management.")
     
-    # Initialize database manager
-    if 'config' in st.session_state:
-        db_manager = DatabaseManager(st.session_state.config)
-    else:
-        db_manager = None
-        st.error("Database configuration not available. Please check admin settings.")
-        return
+    # Initialize database manager from session state
+    if 'db_manager' not in st.session_state:
+        if 'config' in st.session_state:
+            st.session_state.db_manager = DatabaseManager(st.session_state.config)
+            if not st.session_state.db_manager.initialize():
+                st.error("Failed to initialize database connection")
+                return
+        else:
+            st.error("Database configuration not available. Please check admin settings.")
+            return
+    
+    db_manager = st.session_state.db_manager
+    
+    # Get real incident counts from database
+    all_incidents = db_manager.get_incidents()
+    open_count = len([i for i in all_incidents if i['status'] == 'Open'])
+    in_progress_count = len([i for i in all_incidents if i['status'] == 'In Progress'])
+    
+    # Get incidents resolved today
+    today = datetime.now().date()
+    resolved_today = len([i for i in all_incidents 
+                         if i['status'] == 'Resolved' and 
+                         datetime.fromisoformat(str(i['updated_at'])).date() == today])
     
     # Incident overview metrics
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric("Open Incidents", "3", "-2")
+        st.metric("Open Incidents", open_count)
     
     with col2:
-        st.metric("In Progress", "5", "+1")
+        st.metric("In Progress", in_progress_count)
     
     with col3:
-        st.metric("Resolved Today", "12", "+4")
+        st.metric("Resolved Today", resolved_today)
     
     with col4:
-        st.metric("Avg Resolution", "4.2 hrs", "-1.3 hrs")
+        st.metric("Total Incidents", len(all_incidents))
     
     # Tabs for different sections
     tab1, tab2, tab3, tab4 = st.tabs(["📋 Active Incidents", "➕ New Incident", "📊 Analytics", "⚙️ Settings"])
@@ -68,61 +84,26 @@ def main():
         with col3:
             search_term = st.text_input("🔍 Search incidents", placeholder="Search by title or ID...")
         
-        # Sample incident data
-        incidents = [
-            {
-                "ID": "INC-2024-001",
-                "Title": "VM Performance Degradation in East US",
-                "Status": "In Progress",
-                "Priority": "High",
-                "Assignee": "Sarah Chen",
-                "Created": "2024-01-15 09:30",
-                "Service": "Virtual Machines",
-                "Description": "Multiple VMs showing high CPU usage and slow response times"
-            },
-            {
-                "ID": "INC-2024-002",
-                "Title": "Storage Account Access Issues",
-                "Status": "Open",
-                "Priority": "Critical",
-                "Assignee": "Mike Johnson",
-                "Created": "2024-01-15 11:45",
-                "Service": "Storage",
-                "Description": "Users unable to access blob storage containers"
-            },
-            {
-                "ID": "INC-2024-003",
-                "Title": "App Service Deployment Failures",
-                "Status": "Resolved",
-                "Priority": "Medium",
-                "Assignee": "Lisa Wang",
-                "Created": "2024-01-14 14:20",
-                "Service": "App Services",
-                "Description": "Deployment pipeline failing for multiple applications"
-            },
-            {
-                "ID": "INC-2024-004",
-                "Title": "SQL Database Connection Timeouts",
-                "Status": "In Progress",
-                "Priority": "High",
-                "Assignee": "David Kim",
-                "Created": "2024-01-15 08:15",
-                "Service": "SQL Database",
-                "Description": "Applications experiencing database connection timeouts"
-            },
-            {
-                "ID": "INC-2024-005",
-                "Title": "Network Latency Issues",
-                "Status": "Open",
-                "Priority": "Low",
-                "Assignee": "Emma Davis",
-                "Created": "2024-01-15 16:00",
-                "Service": "Networking",
-                "Description": "Increased network latency between regions"
-            }
-        ]
+        # Get incidents from database
+        db_incidents = db_manager.get_incidents(limit=100)
         
-        df_incidents = pd.DataFrame(incidents)
+        if db_incidents:
+            incidents = []
+            for inc in db_incidents:
+                incidents.append({
+                    "ID": inc['incident_id'],
+                    "Title": inc['title'],
+                    "Status": inc['status'],
+                    "Priority": inc['priority'],
+                    "Assignee": inc['assignee'] or 'Unassigned',
+                    "Created": str(inc['created_at'])[:16],
+                    "Service": inc['service'] or 'N/A',
+                    "Description": inc['description'] or ''
+                })
+            df_incidents = pd.DataFrame(incidents)
+        else:
+            # Show empty state with sample data structure
+            df_incidents = pd.DataFrame(columns=["ID", "Title", "Status", "Priority", "Assignee", "Created", "Service", "Description"])
         
         # Apply filters
         if status_filter != "All":
@@ -195,8 +176,18 @@ def main():
                             show_notification("success", "Comment added successfully")
                     
                     with col3:
-                        if st.button("🔄 Update Status"):
-                            show_notification("success", "Status updated")
+                        new_status = st.selectbox(
+                            "Update Status",
+                            options=["Open", "In Progress", "Resolved", "Closed"],
+                            index=["Open", "In Progress", "Resolved", "Closed"].index(incident_details['Status']),
+                            key=f"status_{selected_incident}"
+                        )
+                        if st.button("🔄 Save Status"):
+                            if db_manager.update_incident(selected_incident, {'status': new_status}):
+                                show_notification("success", f"Status updated to {new_status}")
+                                st.rerun()
+                            else:
+                                show_notification("error", "Failed to update status")
                     
                     with col4:
                         if st.button("📧 Notify Team"):
@@ -247,20 +238,40 @@ def main():
             if submitted:
                 if incident_title and incident_description:
                     # Generate new incident ID
-                    new_id = f"INC-{datetime.now().strftime('%Y-%m-%d-%H%M%S')}"
+                    new_id = f"INC-{datetime.now().strftime('%Y%m%d%H%M%S')}"
                     
-                    # Here you would typically save to database
-                    show_notification("success", f"Incident {new_id} created successfully!")
+                    # Create incident data
+                    incident_data = {
+                        'incident_id': new_id,
+                        'title': incident_title,
+                        'description': incident_description,
+                        'status': 'Open',
+                        'priority': incident_priority,
+                        'assignee': incident_assignee if incident_assignee != 'Auto-assign' else None,
+                        'service': incident_service,
+                        'region': incident_region if incident_region != 'All Regions' else None,
+                        'category': incident_category,
+                        'impact': incident_impact
+                    }
                     
-                    # Display created incident summary
-                    st.success(f"""
-                    **Incident Created Successfully**
-                    - **ID:** {new_id}
-                    - **Title:** {incident_title}
-                    - **Priority:** {incident_priority}
-                    - **Assignee:** {incident_assignee}
-                    - **Status:** Open
-                    """)
+                    # Save to database
+                    if db_manager.create_incident(incident_data):
+                        show_notification("success", f"Incident {new_id} created successfully!")
+                        
+                        # Display created incident summary
+                        st.success(f"""
+                        **Incident Created Successfully**
+                        - **ID:** {new_id}
+                        - **Title:** {incident_title}
+                        - **Priority:** {incident_priority}
+                        - **Assignee:** {incident_assignee}
+                        - **Status:** Open
+                        """)
+                        
+                        # Refresh the page to show new incident
+                        st.rerun()
+                    else:
+                        show_notification("error", "Failed to create incident. Please try again.")
                 else:
                     show_notification("error", "Please fill in all required fields marked with *")
     
