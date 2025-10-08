@@ -22,8 +22,10 @@ def main():
     st.title("💰 Cost & Usage Dashboard")
     st.markdown("Monitor and analyze Azure spending patterns and resource usage costs.")
     
-    # Initialize Azure client
-    azure_client = AzureClient()
+    # Initialize Azure client from session state or create new one
+    if 'azure_client' not in st.session_state:
+        st.session_state.azure_client = create_azure_client(st.session_state.get('config', {}))
+    azure_client = st.session_state.azure_client
     
     # Time period selector
     col1, col2, col3 = st.columns([2, 2, 1])
