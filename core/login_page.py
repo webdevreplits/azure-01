@@ -20,6 +20,7 @@ def show_login_page(db_manager: DatabaseManager) -> Optional[Dict[str, Any]]:
     # Initialize auth
     auth = UserAuth(db_manager)
     auth.ensure_schema()
+    auth.ensure_demo_user()  # Create demo user if it doesn't exist
     
     st.markdown("""
     <style>
@@ -73,7 +74,7 @@ def show_login_page(db_manager: DatabaseManager) -> Optional[Dict[str, Any]]:
                         st.warning("Please enter both username and password")
             
             # Demo credentials hint
-            st.info("💡 **Demo Mode**: Create an account or contact your administrator for credentials.")
+            st.info("💡 **Demo Credentials**: Username: `demo@azure.com` | Password: `demo123`")
         
         else:
             # Registration form

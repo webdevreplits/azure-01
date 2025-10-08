@@ -206,3 +206,26 @@ class UserAuth:
             except Exception as e:
                 # Column might already exist
                 pass
+    
+    def ensure_demo_user(self):
+        """Create demo user if it doesn't exist."""
+        # Check if demo user exists
+        if self.db_manager.db_type == 'postgresql':
+            query = "SELECT * FROM users WHERE username = %s"
+        else:
+            query = "SELECT * FROM users WHERE username = ?"
+        
+        results = self.db_manager.execute_query(query, ('demo@azure.com',))
+        
+        if not results:
+            # Create demo user with known credentials
+            try:
+                self.create_user(
+                    username='demo@azure.com',
+                    password='demo123',
+                    email='demo@azure.com',
+                    role='Admin'
+                )
+            except Exception:
+                # User might already exist or there's a database error
+                pass
