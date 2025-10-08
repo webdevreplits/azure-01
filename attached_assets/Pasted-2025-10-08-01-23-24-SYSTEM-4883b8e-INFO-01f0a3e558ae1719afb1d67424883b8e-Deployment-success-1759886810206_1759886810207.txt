@@ -1,0 +1,214 @@
+2025-10-08 01:23:24	SYSTEM	...4883b8e	
+[INFO] [01f0a3e558ae1719afb1d67424883b8e] Deployment successful
+2025-10-08 01:23:24	SYSTEM	...4883b8e	
+[INFO] Deployment 01f0a3e558ae1719afb1d67424883b8e ended in 6.549154213s
+2025-10-08 01:23:22	APP	...4883b8e	
+URL: http://0.0.0.0:8080
+2025-10-08 01:23:22	APP	...4883b8e	
+You can now view your Streamlit app in your browser.
+2025-10-08 01:23:22	SYSTEM	...4883b8e	
+[INFO] Starting app with command: [streamlit run app.py --server.port=8080 --server.address=0.0.0.0]
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+[INFO] Requirements installed successfully.
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: PyJWT<3,>=1.0.0 in ./.venv/lib/python3.11/site-packages (from PyJWT[crypto]<3,>=1.0.0->msal>=1.30.0->azure-identity>=1.15.0->-r requirements.txt (line 7)) (2.10.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: mdurl~=0.1 in ./.venv/lib/python3.11/site-packages (from markdown-it-py>=2.2.0->rich<14,>=10.14.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (0.1.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: rpds-py>=0.7.1 in ./.venv/lib/python3.11/site-packages (from jsonschema>=3.0->altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (0.27.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: referencing>=0.28.4 in ./.venv/lib/python3.11/site-packages (from jsonschema>=3.0->altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (0.36.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: jsonschema-specifications>=2023.03.6 in ./.venv/lib/python3.11/site-packages (from jsonschema>=3.0->altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (2025.9.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: attrs>=22.2.0 in ./.venv/lib/python3.11/site-packages (from jsonschema>=3.0->altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (25.3.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: MarkupSafe>=2.0 in ./.venv/lib/python3.11/site-packages (from jinja2->altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (2.1.5)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pycparser in ./.venv/lib/python3.11/site-packages (from cffi>=2.0.0->cryptography>=2.5->azure-identity>=1.15.0->-r requirements.txt (line 7)) (2.23)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: cffi>=2.0.0 in ./.venv/lib/python3.11/site-packages (from cryptography>=2.5->azure-identity>=1.15.0->-r requirements.txt (line 7)) (2.0.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: six>=1.7.2 in ./.venv/lib/python3.11/site-packages (from thrift<0.21.0,>=0.16.0->databricks-sql-connector>=3.0.0->-r requirements.txt (line 15)) (1.17.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: thrift<0.21.0,>=0.16.0 in ./.venv/lib/python3.11/site-packages (from databricks-sql-connector>=3.0.0->-r requirements.txt (line 15)) (0.20.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: oauthlib<4.0.0,>=3.1.0 in ./.venv/lib/python3.11/site-packages (from databricks-sql-connector>=3.0.0->-r requirements.txt (line 15)) (3.3.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: lz4<5.0.0,>=4.0.2 in ./.venv/lib/python3.11/site-packages (from databricks-sql-connector>=3.0.0->-r requirements.txt (line 15)) (4.4.4)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pyasn1>=0.1.3 in ./.venv/lib/python3.11/site-packages (from rsa<5,>=3.1.4->google-auth~=2.0->databricks-sdk>=0.20.0->-r requirements.txt (line 14)) (0.6.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: rsa<5,>=3.1.4 in ./.venv/lib/python3.11/site-packages (from google-auth~=2.0->databricks-sdk>=0.20.0->-r requirements.txt (line 14)) (4.9.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pyasn1-modules>=0.2.1 in ./.venv/lib/python3.11/site-packages (from google-auth~=2.0->databricks-sdk>=0.20.0->-r requirements.txt (line 14)) (0.4.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: google-auth~=2.0 in ./.venv/lib/python3.11/site-packages (from databricks-sdk>=0.20.0->-r requirements.txt (line 14)) (2.40.3)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: et-xmlfile in ./.venv/lib/python3.11/site-packages (from openpyxl>=3.1.2->-r requirements.txt (line 12)) (2.0.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: azure-mgmt-core>=1.5.0 in ./.venv/lib/python3.11/site-packages (from azure-mgmt-resource>=23.0.0->-r requirements.txt (line 8)) (1.6.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: azure-common>=1.1 in ./.venv/lib/python3.11/site-packages (from azure-mgmt-resource>=23.0.0->-r requirements.txt (line 8)) (1.1.28)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: isodate>=0.6.1 in ./.venv/lib/python3.11/site-packages (from azure-mgmt-resource>=23.0.0->-r requirements.txt (line 8)) (0.7.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: azure-core>=1.31.0 in ./.venv/lib/python3.11/site-packages (from azure-identity>=1.15.0->-r requirements.txt (line 7)) (1.35.1) Requirement already satisfied: cryptography>=2.5 in ./.venv/lib/python3.11/site-packages (from azure-identity>=1.15.0->-r requirements.txt (line 7)) (46.0.2) Requirement already satisfied: msal>=1.30.0 in ./.venv/lib/python3.11/site-packages (from azure-identity>=1.15.0->-r requirements.txt (line 7)) (1.34.0) Requirement already satisfied: msal-extensions>=1.2.0 in ./.venv/lib/python3.11/site-packages (from azure-identity>=1.15.0->-r requirements.txt (line 7)) (1.3.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: markdown-it-py>=2.2.0 in ./.venv/lib/python3.11/site-packages (from rich<14,>=10.14.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (4.0.0) Requirement already satisfied: pygments<3.0.0,>=2.13.0 in ./.venv/lib/python3.11/site-packages (from rich<14,>=10.14.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (2.19.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./.venv/lib/python3.11/site-packages (from requests<3,>=2.27->streamlit>=1.28.0->-r requirements.txt (line 1)) (2.5.0) Requirement already satisfied: certifi>=2017.4.17 in ./.venv/lib/python3.11/site-packages (from requests<3,>=2.27->streamlit>=1.28.0->-r requirements.txt (line 1)) (2025.8.3)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: charset_normalizer<4,>=2 in ./.venv/lib/python3.11/site-packages (from requests<3,>=2.27->streamlit>=1.28.0->-r requirements.txt (line 1)) (3.4.3) Requirement already satisfied: idna<4,>=2.5 in ./.venv/lib/python3.11/site-packages (from requests<3,>=2.27->streamlit>=1.28.0->-r requirements.txt (line 1)) (3.10)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: smmap<6,>=3.0.1 in ./.venv/lib/python3.11/site-packages (from gitdb<5,>=4.0.1->gitpython!=3.1.19,<4,>=3.0.7->streamlit>=1.28.0->-r requirements.txt (line 1)) (5.0.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: gitdb<5,>=4.0.1 in ./.venv/lib/python3.11/site-packages (from gitpython!=3.1.19,<4,>=3.0.7->streamlit>=1.28.0->-r requirements.txt (line 1)) (4.0.12)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: narwhals>=1.14.2 in ./.venv/lib/python3.11/site-packages (from altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (2.5.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: jsonschema>=3.0 in ./.venv/lib/python3.11/site-packages (from altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (4.25.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: jinja2 in ./.venv/lib/python3.11/site-packages (from altair<6,>=4.0->streamlit>=1.28.0->-r requirements.txt (line 1)) (3.1.6)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: tzdata>=2022.7 in ./.venv/lib/python3.11/site-packages (from pandas>=2.0.0->-r requirements.txt (line 2)) (2025.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pytz>=2020.1 in ./.venv/lib/python3.11/site-packages (from pandas>=2.0.0->-r requirements.txt (line 2)) (2025.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: python-dateutil>=2.8.2 in ./.venv/lib/python3.11/site-packages (from pandas>=2.0.0->-r requirements.txt (line 2)) (2.9.0.post0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: watchdog<5,>=2.1.5 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (4.0.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: tornado<7,>=6.0.3 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (6.5.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pydeck<1,>=0.8.0b4 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (0.9.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: gitpython!=3.1.19,<4,>=3.0.7 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (3.1.45)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: typing-extensions<5,>=4.3.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (4.15.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: toml<2,>=0.10.1 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (0.10.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: tenacity<9,>=8.1.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (8.5.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: rich<14,>=10.14.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (13.9.4)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: requests<3,>=2.27 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (2.32.5)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pyarrow>=7.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (16.1.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: protobuf<6,>=3.20 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (5.29.5)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pillow<11,>=7.1.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (10.4.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: packaging<25,>=20 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (24.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: click<9,>=7.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (8.3.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: cachetools<6,>=4.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (5.5.2)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: blinker<2,>=1.0.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (1.9.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: altair<6,>=4.0 in ./.venv/lib/python3.11/site-packages (from streamlit>=1.28.0->-r requirements.txt (line 1)) (5.5.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: databricks-sql-connector>=3.0.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 15)) (3.4.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: databricks-sdk>=0.20.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 14)) (0.33.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: numpy>=1.24.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 13)) (1.26.4)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: openpyxl>=3.1.2 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 12)) (3.1.5)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: reportlab>=4.0.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 11)) (4.4.4)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: azure-monitor-query>=1.2.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 10)) (2.0.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: azure-mgmt-costmanagement>=4.0.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 9)) (4.0.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: azure-mgmt-resource>=23.0.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 8)) (24.0.0)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: azure-identity>=1.15.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 7)) (1.25.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: PyYAML>=6.0.1 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 6)) (6.0.3)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: python-dotenv>=1.0.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 5)) (1.1.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: psycopg2-binary>=2.9.9 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 4)) (2.9.10)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: plotly>=5.17.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 3)) (5.24.1)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: pandas>=2.0.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 2)) (2.2.3)
+2025-10-08 01:23:21	SYSTEM	...cce6587	
+Requirement already satisfied: streamlit>=1.28.0 in ./.venv/lib/python3.11/site-packages (from -r requirements.txt (line 1)) (1.38.0)
+2025-10-08 01:23:21	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/pages/5_Tools.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/pages/3_Incident_Center.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/pages/4_Performance_Monitor.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/pages/2_Cost_Dashboard.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/pages/1_Resource_Explorer.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/pages/6_Admin_Settings.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/env_utils.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/db_manager.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/azure_real_client.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/azure_auth.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/ui_helpers.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/installer.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/azure_client.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/export_utils.py
+2025-10-08 01:23:20	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/user_auth.py
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/db_migration.py
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/azure_client_factory.py
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/login_page.py
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/core/config_loader.py
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/attached_assets/Pasted-2025-10-08-01-12-18-SYSTEM-c2265d4-ERROR-01f0a3e3c9211955a6ed4cd1ec2265d4-Error-deploying-a-1759886066715_1759886066716.txt
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/attached_assets/image_1759885385234.png
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/attached_assets/Pasted-2025-10-08-01-03-36-SYSTEM-cce6587-ERROR-01f0a3e296631535909b5dfdacce6587-Error-deploying-a-1759885480996_1759885480997.txt
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/attached_assets/Pasted--Build-a-Unified-User-Friendly-Azure-Platform-Support-WebApp-Replit-Databricks-Streamli-1759862320201_1759862320204.txt
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/.streamlit/config.toml
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/app.yaml
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/requirements.txt
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/replit.md
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/uv.lock
+2025-10-08 01:23:19	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/db_schema.json
+2025-10-08 01:23:18	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/pyproject.toml
+2025-10-08 01:23:18	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/app.py
+2025-10-08 01:23:18	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/README.md
+2025-10-08 01:23:18	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/.env.example
+2025-10-08 01:23:18	SYSTEM	...4883b8e	
+[INFO] Updated file: python/source_code/.replit
+2025-10-08 01:23:17	SYSTEM	...4883b8e	
+[INFO] Downloading source code from /Workspace/Users/a267aec7-5a15-40c3-bfc8-e49b5f0f51ee/src/01f0a3e558ae1719afb1d67424883b8e
+2025-10-08 01:23:17	SYSTEM	...4883b8e	
+[INFO] Starting deployment 01f0a3e558ae1719afb1d67424883b8e...
