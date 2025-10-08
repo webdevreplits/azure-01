@@ -256,9 +256,32 @@ Tables:
                 client_id = st.text_input("Client ID", type="password")  
                 client_secret = st.text_input("Client Secret", type="password")
                 subscription_id = st.text_input("Default Subscription ID")
+                use_real_client = st.checkbox("Use Real Azure SDK (not mock)", value=False)
                 
                 if st.form_submit_button("🔄 Update Azure Config", type="primary"):
-                    show_notification("success", "Azure configuration updated!")
+                    # Update config
+                    if 'config' not in st.session_state:
+                        st.session_state.config = {}
+                    
+                    st.session_state.config['azure_auth'] = {
+                        'tenant_id': tenant_id,
+                        'client_id': client_id,
+                        'client_secret': client_secret,
+                        'subscription_id': subscription_id
+                    }
+                    st.session_state.config['azure'] = {
+                        'use_real_client': use_real_client
+                    }
+                    
+                    # Save config
+                    save_config(st.session_state.config)
+                    
+                    # Clear azure client to force recreation
+                    if 'azure_client' in st.session_state:
+                        del st.session_state.azure_client
+                    
+                    show_notification("success", "Azure configuration updated! Please refresh the app to apply changes.")
+                    st.rerun()
         
         elif auth_method == "Managed Identity":
             st.info("🔵 Managed Identity authentication will be used. Ensure the application has appropriate permissions.")

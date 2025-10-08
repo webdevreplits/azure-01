@@ -12,7 +12,7 @@ core_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'core
 if core_path not in sys.path:
     sys.path.insert(0, core_path)
 
-from azure_client import AzureClient
+from azure_client_factory import create_azure_client
 from ui_helpers import setup_page_config, show_notification
 
 def main():
