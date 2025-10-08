@@ -21,21 +21,15 @@ def main():
     st.title("🚨 Incident & Support Center")
     st.markdown("Log, track, and resolve Azure service incidents with comprehensive ticket management.")
     
-    # Initialize database manager from session state
-    if 'db_manager' not in st.session_state:
-        if 'config' in st.session_state:
-            st.session_state.db_manager = DatabaseManager(st.session_state.config)
-            if not st.session_state.db_manager.initialize():
-                st.error("Failed to initialize database connection")
-                return
-        else:
-            st.error("Database configuration not available. Please check admin settings.")
-            return
+    # Get database manager from session state
+    db_manager = st.session_state.get('db_manager', None)
     
-    db_manager = st.session_state.db_manager
-    
-    # Get real incident counts from database
-    all_incidents = db_manager.get_incidents()
+    # Get real incident counts from database (or use empty list if no DB)
+    if db_manager:
+        all_incidents = db_manager.get_incidents()
+    else:
+        all_incidents = []
+        st.info("📝 Database not available. Incident tracking is disabled in demo mode.")
     open_count = len([i for i in all_incidents if i['status'] == 'Open'])
     in_progress_count = len([i for i in all_incidents if i['status'] == 'In Progress'])
     
@@ -211,11 +205,14 @@ def main():
                             key=f"status_{selected_incident}"
                         )
                         if st.button("🔄 Save Status"):
-                            if db_manager.update_incident(selected_incident, {'status': new_status}):
-                                show_notification("success", f"Status updated to {new_status}")
-                                st.rerun()
+                            if db_manager:
+                                if db_manager.update_incident(selected_incident, {'status': new_status}):
+                                    show_notification("success", f"Status updated to {new_status}")
+                                    st.rerun()
+                                else:
+                                    show_notification("error", "Failed to update status")
                             else:
-                                show_notification("error", "Failed to update status")
+                                show_notification("warning", "Database not available in demo mode")
                     
                     with col4:
                         if st.button("📧 Notify Team"):
@@ -283,23 +280,26 @@ def main():
                     }
                     
                     # Save to database
-                    if db_manager.create_incident(incident_data):
-                        show_notification("success", f"Incident {new_id} created successfully!")
-                        
-                        # Display created incident summary
-                        st.success(f"""
-                        **Incident Created Successfully**
-                        - **ID:** {new_id}
-                        - **Title:** {incident_title}
-                        - **Priority:** {incident_priority}
-                        - **Assignee:** {incident_assignee}
-                        - **Status:** Open
-                        """)
-                        
-                        # Refresh the page to show new incident
-                        st.rerun()
+                    if db_manager:
+                        if db_manager.create_incident(incident_data):
+                            show_notification("success", f"Incident {new_id} created successfully!")
+                            
+                            # Display created incident summary
+                            st.success(f"""
+                            **Incident Created Successfully**
+                            - **ID:** {new_id}
+                            - **Title:** {incident_title}
+                            - **Priority:** {incident_priority}
+                            - **Assignee:** {incident_assignee}
+                            - **Status:** Open
+                            """)
+                            
+                            # Refresh the page to show new incident
+                            st.rerun()
+                        else:
+                            show_notification("error", "Failed to create incident. Please try again.")
                     else:
-                        show_notification("error", "Failed to create incident. Please try again.")
+                        show_notification("warning", "Database not available. Incident cannot be saved in demo mode.")
                 else:
                     show_notification("error", "Please fill in all required fields marked with *")
     
