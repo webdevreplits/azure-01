@@ -12,6 +12,7 @@ if core_path not in sys.path:
 
 from db_manager import DatabaseManager
 from ui_helpers import setup_page_config, show_notification
+from export_utils import ExportUtils
 
 def main():
     setup_page_config()
@@ -117,6 +118,32 @@ def main():
                 df_incidents['Title'].str.contains(search_term, case=False) |
                 df_incidents['ID'].str.contains(search_term, case=False)
             ]
+        
+        # Export buttons
+        col_exp1, col_exp2, col_exp3 = st.columns([4, 1, 1])
+        with col_exp2:
+            if st.button("📊 Export Excel", use_container_width=True):
+                if not df_incidents.empty:
+                    excel_data = ExportUtils.export_to_excel(
+                        {'Incidents': df_incidents},
+                        'Incident Report'
+                    )
+                    st.download_button(
+                        label="⬇️ Download Excel",
+                        data=excel_data,
+                        file_name=f"incidents_{datetime.now().strftime('%Y%m%d')}.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+        with col_exp3:
+            if st.button("📄 Export PDF", use_container_width=True):
+                if db_incidents:
+                    pdf_data = ExportUtils.create_incident_report(db_incidents)
+                    st.download_button(
+                        label="⬇️ Download PDF",
+                        data=pdf_data,
+                        file_name=f"incidents_{datetime.now().strftime('%Y%m%d')}.pdf",
+                        mime="application/pdf"
+                    )
         
         # Display incidents table
         st.dataframe(

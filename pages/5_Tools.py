@@ -20,7 +20,11 @@ def main():
     st.markdown("Resource management tools, cleanup utilities, and automation helpers for Azure services.")
     
     # Initialize Azure client
-    azure_client = AzureClient()
+    if 'azure_client' not in st.session_state:
+        config = st.session_state.get('config', {})
+        st.session_state.azure_client = create_azure_client(config)
+    
+    azure_client = st.session_state.azure_client
     
     # Tool categories in tabs
     tab1, tab2, tab3, tab4 = st.tabs(["🗑️ Resource Cleanup", "🤖 Automation", "🔧 Utilities", "📜 Command Console"])

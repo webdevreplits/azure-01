@@ -13,6 +13,7 @@ from config_loader import load_config
 from db_manager import DatabaseManager
 from installer import check_and_install_dependencies
 from ui_helpers import setup_page_config, display_environment_indicator, show_notification
+from login_page import show_login_page, show_user_menu
 
 def main():
     # Set up page configuration
@@ -22,12 +23,40 @@ def main():
     if 'initialized' not in st.session_state:
         st.session_state.initialized = False
         st.session_state.db_connected = False
+        st.session_state.authenticated = False
         st.session_state.environment = detect_environment()
         st.session_state.config = load_config()
     
-    # Display environment indicator in sidebar
+    # Initialize database first (needed for authentication)
+    if not st.session_state.initialized:
+        with st.spinner("Initializing Azure Platform Support Center..."):
+            try:
+                # Check dependencies
+                check_and_install_dependencies(st.session_state.environment)
+                
+                # Initialize database
+                db_manager = DatabaseManager(st.session_state.config)
+                if db_manager.initialize():
+                    st.session_state.db_connected = True
+                    st.session_state.db_manager = db_manager
+                else:
+                    st.session_state.db_connected = False
+                
+                st.session_state.initialized = True
+                
+            except Exception as e:
+                st.error(f"Initialization failed: {str(e)}")
+                return
+    
+    # Check authentication
+    if not st.session_state.get('authenticated', False):
+        show_login_page(st.session_state.db_manager)
+        return
+    
+    # Display environment indicator and user menu in sidebar
     with st.sidebar:
         display_environment_indicator(st.session_state.environment)
+        show_user_menu()
         
         # Navigation
         st.markdown("---")
@@ -48,27 +77,6 @@ def main():
     with col3:
         st.metric("Last Updated", datetime.now().strftime("%H:%M:%S"))
     
-    # Initialize application
-    if not st.session_state.initialized:
-        with st.spinner("Initializing Azure Platform Support Center..."):
-            try:
-                # Check dependencies
-                check_and_install_dependencies(st.session_state.environment)
-                
-                # Initialize database
-                db_manager = DatabaseManager(st.session_state.config)
-                if db_manager.initialize():
-                    st.session_state.db_connected = True
-                    show_notification("success", "Database connected successfully!")
-                else:
-                    st.session_state.db_connected = False
-                    show_notification("warning", "Database connection failed. Some features may be limited.")
-                
-                st.session_state.initialized = True
-                st.rerun()
-                
-            except Exception as e:
-                show_notification("error", f"Initialization failed: {str(e)}")
     
     # Main dashboard content
     st.markdown("---")

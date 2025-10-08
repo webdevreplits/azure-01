@@ -14,6 +14,7 @@ if core_path not in sys.path:
 
 from azure_client_factory import create_azure_client
 from ui_helpers import setup_page_config, show_notification
+from export_utils import ExportUtils
 
 def main():
     setup_page_config()
