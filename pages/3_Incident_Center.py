@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 from datetime import datetime, timedelta
 import sys
@@ -374,8 +375,8 @@ def main():
         
         # Generate sample resolution time data
         dates = pd.date_range(start=datetime.now() - timedelta(days=30), end=datetime.now(), freq='D')
-        resolution_times = pd.np.random.normal(4.2, 1.5, len(dates))
-        resolution_times = pd.np.maximum(resolution_times, 0.5)  # Ensure positive times
+        resolution_times = np.random.normal(4.2, 1.5, len(dates))
+        resolution_times = np.maximum(resolution_times, 0.5)  # Ensure positive times
         
         resolution_data = pd.DataFrame({
             'Date': dates,
