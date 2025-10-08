@@ -22,7 +22,8 @@ def main():
     st.markdown("Monitor Azure services performance metrics and Application Insights data.")
     
     # Initialize Azure client
-    azure_client = AzureClient()
+    config = st.session_state.get('config', {})
+    azure_client = create_azure_client(config)
     
     # Time range and refresh controls
     col1, col2, col3, col4 = st.columns(4)

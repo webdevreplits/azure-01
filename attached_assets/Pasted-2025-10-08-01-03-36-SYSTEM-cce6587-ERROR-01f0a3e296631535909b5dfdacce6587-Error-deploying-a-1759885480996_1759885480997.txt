@@ -1,0 +1,87 @@
+2025-10-08 01:03:36	SYSTEM	...cce6587	
+[ERROR] [01f0a3e296631535909b5dfdacce6587] Error deploying app: error starting app: app crashed unexpectedly
+2025-10-08 01:03:36	SYSTEM	...cce6587	
+[INFO] Deployment 01f0a3e296631535909b5dfdacce6587 ended in 4.625749772s
+2025-10-08 01:03:36	SYSTEM	...cce6587	
+[ERROR] Could not start app. app crashed unexpectedly.
+2025-10-08 01:03:36	APP	...cce6587	
+2025-10-08 01:03:36	APP	...cce6587	
+: No module named 'psycopg2'
+2025-10-08 01:03:36	APP	...cce6587	
+ModuleNotFoundError
+2025-10-08 01:03:36	APP	...cce6587	
+    import psycopg2
+2025-10-08 01:03:36	APP	...cce6587	
+  File "/app/python/source_code/core/db_manager.py", line 4, in <module>
+2025-10-08 01:03:36	APP	...cce6587	
+    from db_manager import DatabaseManager
+2025-10-08 01:03:36	APP	...cce6587	
+Traceback (most recent call last): File "/app/python/source_code/app.py", line 13, in <module>
+2025-10-08 01:03:35	SYSTEM	...cce6587	
+[INFO] Starting app with command: [python app.py]
+2025-10-08 01:03:35	SYSTEM	...cce6587	
+[INFO] File requirements.txt not found
+2025-10-08 01:03:35	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/pages/5_Tools.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/pages/3_Incident_Center.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/pages/4_Performance_Monitor.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/pages/2_Cost_Dashboard.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/pages/1_Resource_Explorer.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/pages/6_Admin_Settings.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/env_utils.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/db_manager.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/azure_real_client.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/azure_auth.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/ui_helpers.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/installer.py
+2025-10-08 01:03:34	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/azure_client.py
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/export_utils.py
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/user_auth.py
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/db_migration.py
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/azure_client_factory.py
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/login_page.py
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/core/config_loader.py
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/attached_assets/Pasted--Build-a-Unified-User-Friendly-Azure-Platform-Support-WebApp-Replit-Databricks-Streamli-1759862320201_1759862320204.txt
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/.streamlit/config.toml
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/replit.md
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/uv.lock
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/db_schema.json
+2025-10-08 01:03:33	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/pyproject.toml
+2025-10-08 01:03:32	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/app.py
+2025-10-08 01:03:32	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/README.md
+2025-10-08 01:03:32	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/.env.example
+2025-10-08 01:03:32	SYSTEM	...cce6587	
+[INFO] Updated file: python/source_code/.replit
+2025-10-08 01:03:31	SYSTEM	...cce6587	
+[INFO] Downloading source code from /Workspace/Users/a267aec7-5a15-40c3-bfc8-e49b5f0f51ee/src/01f0a3e296631535909b5dfdacce6587
+2025-10-08 01:03:31	SYSTEM	...cce6587	
+[INFO] Starting deployment 01f0a3e296631535909b5dfdacce6587...
+2025-10-08 01:02:33	SYSTEM		
+[INFO] Starting Databricks Apps runtime...

@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
@@ -119,12 +120,12 @@ def main():
     for i in range(20):
         resource_details.append({
             'Name': f'resource-{i+1:03d}',
-            'Type': pd.np.random.choice(['VM', 'Storage', 'App Service', 'SQL DB']),
-            'Resource Group': f'rg-{pd.np.random.choice(["prod", "dev", "staging"])}',
-            'Region': pd.np.random.choice(['East US', 'West US 2', 'North Europe']),
-            'Status': pd.np.random.choice(['Running', 'Stopped', 'Starting'], p=[0.7, 0.2, 0.1]),
-            'Cost/Month': f'${pd.np.random.randint(50, 2000):,}',
-            'Tags': f'env:{pd.np.random.choice(["prod", "dev"])}'
+            'Type': np.random.choice(['VM', 'Storage', 'App Service', 'SQL DB']),
+            'Resource Group': f'rg-{np.random.choice(["prod", "dev", "staging"])}',
+            'Region': np.random.choice(['East US', 'West US 2', 'North Europe']),
+            'Status': np.random.choice(['Running', 'Stopped', 'Starting'], p=[0.7, 0.2, 0.1]),
+            'Cost/Month': f'${np.random.randint(50, 2000):,}',
+            'Tags': f'env:{np.random.choice(["prod", "dev"])}'
         })
     
     df_details = pd.DataFrame(resource_details)
