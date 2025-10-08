@@ -10,6 +10,22 @@ The app includes resource exploration, cost management, incident tracking, perfo
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (October 2025)
+
+### Databricks Deployment Fixes
+- **Port Configuration**: Fixed app.yaml to use port 8000 (was 8080) to match Databricks environment expectations
+- **Demo User Authentication**: Added automatic demo user creation (demo@azure.com / demo123) when database is available
+- **Cost Dashboard Bug**: Fixed NameError in Cost Dashboard by properly initializing Azure client via factory pattern
+- **Database Graceful Degradation**: Enhanced pages to handle missing database gracefully, preventing 502 errors
+- **Session State Management**: Improved Azure client initialization across pages using session state
+
+### Files Modified
+- `app.yaml` - Corrected port from 8080 to 8000 for Databricks
+- `core/user_auth.py` - Added ensure_demo_user() method for automatic demo account creation
+- `core/login_page.py` - Calls ensure_demo_user() on page load, updated demo credentials hint
+- `pages/2_Cost_Dashboard.py` - Fixed Azure client initialization using create_azure_client()
+- `pages/3_Incident_Center.py` - Added database availability checks for create/update operations
+
 ## System Architecture
 
 ### Multi-Environment Detection & Adaptation
