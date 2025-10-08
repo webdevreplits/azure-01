@@ -7,7 +7,7 @@ import hashlib
 import secrets
 from typing import Dict, Any, Optional, List
 from datetime import datetime
-from .db_manager import DatabaseManager
+from db_manager import DatabaseManager
 
 class UserAuth:
     """

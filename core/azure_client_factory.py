@@ -31,7 +31,7 @@ def create_azure_client(config: Dict[str, Any]):
     
     if use_real_client and has_credentials:
         try:
-            from .azure_real_client import AzureRealClient
+            from azure_real_client import AzureRealClient
             logger.info("Creating real Azure SDK client")
             return AzureRealClient(config)
         except ImportError as e:
@@ -40,6 +40,6 @@ def create_azure_client(config: Dict[str, Any]):
             logger.warning(f"Failed to create real Azure client: {e}. Falling back to mock client.")
     
     # Default to mock client
-    from .azure_client import AzureClient
+    from azure_client import AzureClient
     logger.info("Creating mock Azure client")
     return AzureClient()

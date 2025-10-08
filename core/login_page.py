@@ -4,8 +4,8 @@ Login page component for Streamlit app.
 
 import streamlit as st
 from typing import Optional, Dict, Any
-from .user_auth import UserAuth
-from .db_manager import DatabaseManager
+from user_auth import UserAuth
+from db_manager import DatabaseManager
 
 def show_login_page(db_manager: DatabaseManager) -> Optional[Dict[str, Any]]:
     """

@@ -11,7 +11,7 @@ from azure.mgmt.costmanagement import CostManagementClient
 from azure.monitor.query import MetricsQueryClient, LogsQueryClient
 from azure.core.exceptions import AzureError
 import pandas as pd
-from .azure_auth import AzureAuth
+from azure_auth import AzureAuth
 
 class AzureRealClient:
     """

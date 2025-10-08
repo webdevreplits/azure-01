@@ -7,7 +7,7 @@ import json
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-from .db_manager import DatabaseManager
+from db_manager import DatabaseManager
 
 class DatabaseMigration:
     """Handle database migration between environments."""
