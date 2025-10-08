@@ -31,8 +31,9 @@ def main():
     if not st.session_state.initialized:
         with st.spinner("Initializing Azure Platform Support Center..."):
             try:
-                # Check dependencies
-                check_and_install_dependencies(st.session_state.environment)
+                # Check dependencies (skip in Databricks to avoid errors)
+                if st.session_state.environment != 'databricks':
+                    check_and_install_dependencies(st.session_state.environment)
                 
                 # Initialize database
                 db_manager = DatabaseManager(st.session_state.config)
@@ -40,18 +41,33 @@ def main():
                     st.session_state.db_connected = True
                     st.session_state.db_manager = db_manager
                 else:
+                    # Database failed but continue with limited functionality
                     st.session_state.db_connected = False
+                    st.session_state.db_manager = None
+                    st.warning("⚠️ Database connection failed. Running in limited mode without authentication.")
                 
                 st.session_state.initialized = True
                 
             except Exception as e:
-                st.error(f"Initialization failed: {str(e)}")
-                return
+                # Log error but don't exit - continue with limited functionality
+                st.session_state.initialized = True
+                st.session_state.db_connected = False
+                st.session_state.db_manager = None
+                st.warning(f"⚠️ Initialization error: {str(e)}. Running in limited mode.")
     
-    # Check authentication
+    # Check authentication (skip if no database)
     if not st.session_state.get('authenticated', False):
-        show_login_page(st.session_state.db_manager)
-        return
+        if st.session_state.db_manager:
+            show_login_page(st.session_state.db_manager)
+            return
+        else:
+            # No database - skip authentication for demo mode
+            st.session_state.authenticated = True
+            st.session_state.user = {
+                'username': 'demo_user',
+                'email': 'demo@example.com',
+                'role': 'Admin'
+            }
     
     # Display environment indicator and user menu in sidebar
     with st.sidebar:
@@ -73,7 +89,12 @@ def main():
     with col1:
         st.metric("Environment", env_info['name'], env_info['status'])
     with col2:
-        st.metric("Database", "PostgreSQL", "Connected" if st.session_state.db_connected else "Disconnected")
+        db_type = "None"
+        db_status = "Disconnected"
+        if st.session_state.db_connected and st.session_state.db_manager:
+            db_type = st.session_state.db_manager.db_type.upper() if st.session_state.db_manager.db_type else "Unknown"
+            db_status = "Connected"
+        st.metric("Database", db_type, db_status)
     with col3:
         st.metric("Last Updated", datetime.now().strftime("%H:%M:%S"))
     
